@@ -1,0 +1,10 @@
+*.fbx
+*.blend
+*.blend1
+
+/obj
+/Library
+/.vscode
+/Temp
+
+
