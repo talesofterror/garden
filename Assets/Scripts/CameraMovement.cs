@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour
     Vector3 angledVector;
 
     Vector3 origCamPos;
- 
+
     float mouseScrollFactor = 3f;
     float mouseScrollFactorClamped;
     float mouseScrollMem;
@@ -38,12 +38,23 @@ public class CameraMovement : MonoBehaviour
     void FixedUpdate()
     {
 
+/*        mouseScrollFactor -= Input.mouseScrollDelta.y / 2;
+        mouseScrollFactorClamped = Mathf.Clamp(mouseScrollFactor, 1, 2.5f);
+
+        if (mouseScrollFactorClamped != Input.mouseScrollDelta.y / 2)
+        {
+            mouseScrollMem = mouseScrollFactorClamped;
+        }
+
+        camSwingMultiplier = camSwingSpeed / 1000;
+        controls();*/
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         mouseScrollFactor -= Input.mouseScrollDelta.y / 2;
         mouseScrollFactorClamped = Mathf.Clamp(mouseScrollFactor, 1, 2.5f);
 
@@ -51,11 +62,11 @@ public class CameraMovement : MonoBehaviour
         {
             mouseScrollMem = mouseScrollFactorClamped;
         }
-        
-        camSwingMultiplier = camSwingSpeed / 1000;
 
+        camSwingMultiplier = camSwingSpeed / 1000;
         controls();
 
+        print(Time.deltaTime);
 
     }
 
@@ -65,8 +76,8 @@ public class CameraMovement : MonoBehaviour
         // radius = (Vector3.Distance(origCamPos, targetPosition) * 0.3f) + mouseScrollFactor * 5;
         radius = (Vector3.Distance(origCamPos, targetPosition) * 0.3f);
         float angle = (Mathf.PI * 1.52f - (cameraSwingPosition + swingControlOffset));
-        float sine = Mathf.Sin(angle) ;
-        float cos = Mathf.Cos(angle) ;
+        float sine = Mathf.Sin(angle);
+        float cos = Mathf.Cos(angle);
 
         // print("orbitalFact X = " + radius * cos);
         // print("orbitalFact Z = " + radius * sine);
@@ -74,15 +85,18 @@ public class CameraMovement : MonoBehaviour
         // print(radius);
         // print("Mousewheel Scroll Factor = " + mouseScrollFactor);
 
-        orbitalVector = new Vector3( (radius * cos), 3 - mouseScrollFactorClamped / 3, (radius * sine) );
+        orbitalVector = new Vector3((radius * cos), 3 - mouseScrollFactorClamped / 3, (radius * sine));
 
         angledVector = new Vector3(0, 0 + mouseScrollFactorClamped * 4, 0) + targetObject.transform.position;
 
-        transform.position = angledVector + orbitalVector *mouseScrollFactorClamped;
+        transform.position = angledVector + orbitalVector * mouseScrollFactorClamped;
 
         Vector3 lookAtOffset = new Vector3(0, 0 + 4f / mouseScrollFactorClamped + cameraAngle, 0);
         transform.LookAt(targetObject.transform.position + lookAtOffset);
-        
+
+
+        // code below needs to be replaced with Time.deltaTime multiplication somewhere to address 
+        // speed difference when framerate is low (affects build behavior)
         if (Input.GetKey(KeyCode.Q))
         {
             swingControlOffset += camSwingMultiplier;
