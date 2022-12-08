@@ -38,51 +38,72 @@ public class PlayerMovement : MonoBehaviour
         // cursorObject.GetComponent<Collider>().enabled = false;
         cursorObject.SetActive(true);
         rB = GetComponent<Rigidbody>();
-        _mSpeed = moveSpeed * 1000;
-        
-    }
 
-private void OnCollisionEnter(Collision collision) {
-
-    if(collision.gameObject.tag == "EnvironmentalBorder"){
-
-        rB.isKinematic = false;
-        print("Environmental Collision");
 
     }
 
-    print(collision.gameObject.tag);
-}
+    private void OnCollisionEnter(Collision collision)
+    {
 
-private void onTriggerEnter() {
-        if(tag == "EnvironmentalBorder"){
+        if (collision.gameObject.tag == "EnvironmentalBorder")
+        {
+
+            //rB.isKinematic = false;
+            print("Environmental Collision");
+            rB.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+        }
+
+
+        if (collision.gameObject.tag == "rigidbody toy")
+        {
+
+            //rB.isKinematic = false;
+            print("Toy Collision");
+
+            rB.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+
+        }
+
+        print(collision.gameObject.tag);
+    }
+
+    private void onTriggerEnter()
+    {
+        if (tag == "EnvironmentalBorder")
+        {
 
             print("Environmental Trigger");
 
         }
-}
+    }
 
-void Update(){
+    void Update()
+    {
 
-    debug();
+
+        debug();
 
     }
 
 
     // Update is called once per frame
     void FixedUpdate()
-{
+    {
 
-    rB.velocity = new Vector3(0, 0, 0);
-    playerTransform = playerObject.transform;
+        _mSpeed = moveSpeed * 1000;
 
-    PlayerRotation();
-    directionalMovement(directionalVector, isRunning());
+        rB.velocity = new Vector3(0, 0, 0);
+        playerTransform = playerObject.transform;
 
-    cursorObject.transform.position = new Vector3(pointerBeacon.x, pointerBeacon.y, pointerBeacon.z);
-    cursorObject.transform.LookAt(cam.transform.position);
+        PlayerRotation();
+        directionalMovement(directionalVector, isRunning());
 
-}
+        cursorObject.transform.position = new Vector3(pointerBeacon.x, pointerBeacon.y, pointerBeacon.z);
+        cursorObject.transform.LookAt(cam.transform.position);
+
+    }
 
     private bool isRunning()
     {
@@ -109,7 +130,7 @@ void Update(){
         {
             rB.isKinematic = true;
         }
-        else 
+        else
         {
             rB.isKinematic = false;
         }
@@ -117,19 +138,19 @@ void Update(){
         // print("h = " + h + " | v = " + v);
 
 
-        dVector = new Vector3(h, 0, v); // assigns direction floats to  a new Vector value
+        dVector = new Vector3(h, 1, v); // assigns direction floats to  a new Vector value
 
         dVector = Quaternion.Euler(1, playerTransform.eulerAngles.y, 1) * dVector; // factors the object's current y rotation into dVector
         rB.AddForce(dVector * (_mSpeed * accelerate), ForceMode.Force);
 
         // print("Move target position = " + targetPosition + ".");
 
-        if (playerTransform.position.y != yPlacement)
+/*        if (playerTransform.position.y != yPlacement)
         {
             playerTransform.position = new Vector3(playerTransform.position.x, yPlacement, playerTransform.position.z);
         }
 
-        playerTransform.position = new Vector3(playerTransform.position.x, yPlacement, playerTransform.position.z);
+        playerTransform.position = new Vector3(playerTransform.position.x, yPlacement, playerTransform.position.z);*/
 
         // The two statements above can be removed, which will allow the player to traverse in the y direction
         // But that leads to it's own set of problems. I need to account for the current position of the 
@@ -141,17 +162,19 @@ void Update(){
     }
 
 
-    void PlayerRotation(){
+    void PlayerRotation()
+    {
 
-        mousePosition = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+        mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
 
         RaycastHit beaconHit;
         Ray ray = cam.ScreenPointToRay(mousePosition);
 
-        if (Physics.Raycast(ray, out beaconHit, 1000)){
+        if (Physics.Raycast(ray, out beaconHit, 1000))
+        {
             pointerBeacon = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
             /*pointerBeacon = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);*/
-            
+
             // beaconHit.point.y will point the player towards the surface hit by the ray
             // but also rotates the player towards the position of the beacon
         }
@@ -160,26 +183,31 @@ void Update(){
 
     }
 
-    private void debug() {
+    private void debug()
+    {
 
         debugSphere.transform.position = pointerBeacon;
         debugSphere.GetComponent<Collider>().enabled = true;
 
-        if (dBSphere == false){
+        if (dBSphere == false)
+        {
             debugSphere.SetActive(false);
         }
 
-        if (dBSphere == true){
+        if (dBSphere == true)
+        {
             debugSphere.SetActive(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.P)){
+        if (Input.GetKeyDown(KeyCode.P))
+        {
             dBSphere = !dBSphere;
             print("debug sphere toggle");
         }
 
 
-        if (Input.GetKey(KeyCode.R)){
+        if (Input.GetKey(KeyCode.R))
+        {
             transform.position = new Vector3(0, playerTransform.position.y, 0);
         }
     }
