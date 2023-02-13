@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        print(collision.gameObject.tag);
+        // print(collision.gameObject.tag);
     }
 
     private void onTriggerEnter()

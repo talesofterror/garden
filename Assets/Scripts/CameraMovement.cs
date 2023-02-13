@@ -19,8 +19,7 @@ public class CameraMovement : MonoBehaviour
     float mouseScrollMem;
     public float cameraSwingPosition = 0f;
     public float swingControlOffset;
-    public float camSwingSpeed;
-    float camSwingMultiplier;
+    public float camSwingMultiplier = 1.78f;
 
     public float cameraAngle = 0;
 
@@ -63,10 +62,10 @@ public class CameraMovement : MonoBehaviour
             mouseScrollMem = mouseScrollFactorClamped;
         }
 
-        camSwingMultiplier = camSwingSpeed / 1000;
         controls();
+        orbitalRotation_2();
 
-        print(Time.deltaTime);
+        // print(Time.deltaTime);
 
     }
 
@@ -94,19 +93,21 @@ public class CameraMovement : MonoBehaviour
         Vector3 lookAtOffset = new Vector3(0, 0 + 4f / mouseScrollFactorClamped + cameraAngle, 0);
         transform.LookAt(targetObject.transform.position + lookAtOffset);
 
+    }
 
-        // code below needs to be replaced with Time.deltaTime multiplication somewhere to address 
-        // speed difference when framerate is low (affects build behavior)
+    private void orbitalRotation_2()
+    {
+        // this may have fixed the build discrepancy issue with camera panning
+        // won't know until i build
+
         if (Input.GetKey(KeyCode.Q))
         {
-            swingControlOffset += camSwingMultiplier;
+            swingControlOffset += camSwingMultiplier * Time.deltaTime;
 
         }
         if (Input.GetKey(KeyCode.E))
         {
-            swingControlOffset -= camSwingMultiplier;
+            swingControlOffset -= camSwingMultiplier * Time.deltaTime;
         }
-
     }
-
 }

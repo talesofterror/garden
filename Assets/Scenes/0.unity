@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589245, b: 0.2978263, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589248, b: 0.29782632, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10208,8 +10208,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.4188679, g: 0.64486367, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -10313,7 +10313,7 @@ MonoBehaviour:
   targetObject: {fileID: 228728439}
   cameraSwingPosition: 0
   swingControlOffset: 0
-  camSwingSpeed: 3
+  camSwingMultiplier: 1.78
   cameraAngle: 1.72
   radiusOffset: 1
 --- !u!114 &963194231
@@ -13946,7 +13946,6 @@ GameObject:
   - component: {fileID: 1789219796}
   - component: {fileID: 1789219795}
   - component: {fileID: 1789219794}
-  - component: {fileID: 1789219798}
   - component: {fileID: 1789219793}
   m_Layer: 2
   m_Name: Sphere (1)
@@ -13980,7 +13979,7 @@ SphereCollider:
   m_GameObject: {fileID: 1789219792}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
@@ -14049,20 +14048,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &1789219798
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1789219792}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1808172327
 PrefabInstance:
   m_ObjectHideFlags: 0
