@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,11 +24,12 @@ public class playerAnimationControls : MonoBehaviour
     void Update()
     {
         bool forwardPressed = Input.GetKey("w");
+        bool backwardPressed = Input.GetKey("d");
         bool shiftPressed = Input.GetKey(KeyCode.LeftShift);
-        bool spacePressed = Input.GetKey(KeyCode.Space);
+        bool spacePressed = Input.GetKeyDown(KeyCode.Space);
         bool isWalking = animator.GetBool(isWalkingHash);
         bool isRunning = animator.GetBool(isRunningHash);
-        bool isJumping = animator.GetBool(isJumpingHash);
+        bool isJumping = animator.GetBool(isRunningHash);
 
         // WALKING
 
@@ -36,10 +38,23 @@ public class playerAnimationControls : MonoBehaviour
             animator.SetBool(isWalkingHash, true);
         }
         if (!forwardPressed && isWalking)
-        {
+        { 
             animator.SetBool(isWalkingHash, false);
         }
 
+        // WALKING (BACKWARDS)
+
+        //if (backwardPressed && !isWalking)
+        //{
+        //    print("backwardPressed");
+        //    animator.SetBool(isWalkingHash, true);
+        //}
+        //if (!backwardPressed && isWalking)
+        //{
+            
+        //    animator.SetBool(isWalkingHash, false);
+        //}
+        
         // RUNNING
 
         if (!isRunning && (shiftPressed && isWalking))
@@ -53,14 +68,21 @@ public class playerAnimationControls : MonoBehaviour
 
         // JUMPING
 
-        if (!isJumping && spacePressed)
+        if (spacePressed)
         {
-            animator.SetBool(isJumpingHash, true);
+            /*animator.SetBool(isRunningHash, false);*/
+            /*animator.SetBool(isWalkingHash, false);*/
+            animator.SetTrigger(isJumpingHash);
         }
-        if (isJumping && !spacePressed)
-        {
-            animator.SetBool(isJumpingHash, false);
-        }
+
+        //if (!isJumping && spacePressed)
+        //{
+        //    animator.SetBool(isJumpingHash, true);
+        //}
+        //if (isJumping && !spacePressed)
+        //{
+        //    animator.SetBool(isJumpingHash, false);
+        //}
 
         debug();
 
@@ -75,10 +97,6 @@ public class playerAnimationControls : MonoBehaviour
         if (animator.GetBool(isRunningHash))
         {
             print("Running");
-        }
-        if (animator.GetBool(isJumpingHash))
-        {
-            print("Jumping");
         }
     }
 }

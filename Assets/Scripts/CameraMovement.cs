@@ -23,7 +23,12 @@ public class CameraMovement : MonoBehaviour
 
     public float cameraAngle = 0;
 
-    float radius;
+    float cam_Radius;
+    public float radiusValue;
+
+    Vector3 heightValueVector;
+    public float heightValue;
+
     [Range(1, 50)] public float radiusOffset;
     Vector3 orbitalVector;
 
@@ -31,6 +36,7 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         origCamPos = transform.position;
+
         targetPosition = targetObject.transform.position;
     }
 
@@ -53,7 +59,6 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         mouseScrollFactor -= Input.mouseScrollDelta.y / 2;
         mouseScrollFactorClamped = Mathf.Clamp(mouseScrollFactor, 1, 2.5f);
 
@@ -73,7 +78,7 @@ public class CameraMovement : MonoBehaviour
     {
 
         // radius = (Vector3.Distance(origCamPos, targetPosition) * 0.3f) + mouseScrollFactor * 5;
-        radius = (Vector3.Distance(origCamPos, targetPosition) * 0.3f);
+        cam_Radius = (Vector3.Distance(origCamPos, targetPosition) * 0.3f) + radiusValue;
         float angle = (Mathf.PI * 1.52f - (cameraSwingPosition + swingControlOffset));
         float sine = Mathf.Sin(angle);
         float cos = Mathf.Cos(angle);
@@ -84,11 +89,12 @@ public class CameraMovement : MonoBehaviour
         // print(radius);
         // print("Mousewheel Scroll Factor = " + mouseScrollFactor);
 
-        orbitalVector = new Vector3((radius * cos), 3 - mouseScrollFactorClamped / 3, (radius * sine));
+        orbitalVector = new Vector3((cam_Radius * cos), 3 - mouseScrollFactorClamped / 3, (cam_Radius * sine));
 
         angledVector = new Vector3(0, 0 + mouseScrollFactorClamped * 4, 0) + targetObject.transform.position;
 
-        transform.position = angledVector + orbitalVector * mouseScrollFactorClamped;
+        heightValueVector = new Vector3(0f, heightValue, 0f);
+        transform.position = angledVector + orbitalVector * mouseScrollFactorClamped + heightValueVector;
 
         Vector3 lookAtOffset = new Vector3(0, 0 + 4f / mouseScrollFactorClamped + cameraAngle, 0);
         transform.LookAt(targetObject.transform.position + lookAtOffset);
