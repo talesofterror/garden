@@ -1,0 +1,9 @@
+fully rolled in: 
+	Camera FOV = 22
+	Script Radius Value = 19.4
+	Script Height Value = 5.1 
+
+fully rolled out: 
+	Camera FOV = 43
+	Script Radius Value = 2.94
+	ScriptHeight Value = 7.37

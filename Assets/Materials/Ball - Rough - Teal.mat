@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ground_URP
+  m_Name: Ball - Rough - Teal
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ValidKeywords:
   - _NORMALMAP
@@ -108,8 +108,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.30340362, g: 0.6603774, b: 0, a: 1}
-    - _Color: {r: 0.3034036, g: 0.6603774, b: 0, a: 1}
+    - _BaseColor: {r: 0, g: 0.65882355, b: 0.60819614, a: 1}
+    - _Color: {r: 0, g: 0.65882355, b: 0.60819614, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
