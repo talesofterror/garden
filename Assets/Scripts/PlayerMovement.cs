@@ -32,9 +32,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         Cursor.visible = false;
-        cursorObject = Instantiate(cursorIcon, pointerBeacon + cursorYOffset, Quaternion.Euler(0, 180, 0));
+        cursorObject = Instantiate(cursorIcon, cursorYOffset, Quaternion.Euler(0, 180, 0));
         cursorObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        // cursorObject.GetComponent<Collider>().enabled = false;
         cursorObject.SetActive(true);
         rB = GetComponent<Rigidbody>();
         iconOn = false;
@@ -169,8 +168,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(ray, out beaconHit, 1000))
         {
-            //pointerBeacon = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
-            pointerBeacon = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);
+            pointerBeacon = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
+            //pointerBeacon = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);
 
             // beaconHit.point.y will point the player towards the surface hit by the ray
             // but also rotates the player towards the position of the beacon
@@ -202,6 +201,8 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(0, playerTransform.position.y, 0);
         }
+
+        print(Input.GetAxis("Horizontal"));
     }
 
 }

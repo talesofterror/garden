@@ -24,6 +24,7 @@ public class playerAnimationControls : MonoBehaviour
     void Update()
     {
         bool forwardPressed = Input.GetKey("w");
+        bool controllerForwardPressed = (Input.GetAxis("Vertical") != 0);
         bool backwardPressed = Input.GetKey("d");
         bool shiftPressed = Input.GetKey(KeyCode.LeftShift);
         bool spacePressed = Input.GetKeyDown(KeyCode.Space);
@@ -33,9 +34,10 @@ public class playerAnimationControls : MonoBehaviour
 
         // WALKING
 
-        if (forwardPressed && !isWalking)
+        if ((forwardPressed && !isWalking) || (controllerForwardPressed && !isWalking))
         {
             animator.SetBool(isWalkingHash, true);
+            print(forwardPressed);
         }
         if (!forwardPressed && isWalking)
         { 

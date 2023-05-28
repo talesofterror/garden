@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,20 @@ public class CameraMovement : MonoBehaviour
 
     Vector3 origCamPos;
 
-    float mouseScrollFactor = 3f;
+    Camera cam;
+
+    float mouseScrollFactor = 0;
     float mouseScrollFactorClamped;
-    float mouseScrollMem;
+    float scrollLerpRadius;
+    float scrollLerpHeight;
+    float scrollLerpFOV;
+    public float scrollLerpState = 0;
+    public float scrollHeightOutValue = 7.37f;
+    public float scrollHeightInValue = 5.1f;
+    public float scrollRadiusOutValue = 2.94f;
+    public float scrollRadiusInValue = 19.4f;
+    public float scrollFOVOutValue = 43;
+    public float scrollFOVInValue = 22;
     public float cameraSwingPosition = 0f;
     public float swingControlOffset;
     public float camSwingMultiplier = 1.78f;
@@ -24,10 +36,9 @@ public class CameraMovement : MonoBehaviour
     public float cameraAngle = 0;
 
     float cam_Radius;
-    public float radiusValue;
-
     Vector3 heightValueVector;
-    public float heightValue;
+    float heightValue;
+    float radiusValue;
 
     [Range(1, 50)] public float radiusOffset;
     Vector3 orbitalVector;
@@ -35,6 +46,7 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cam = this.GetComponent<Camera>();
         origCamPos = transform.position;
 
         targetPosition = targetObject.transform.position;
@@ -42,36 +54,25 @@ public class CameraMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-
-/*        mouseScrollFactor -= Input.mouseScrollDelta.y / 2;
-        mouseScrollFactorClamped = Mathf.Clamp(mouseScrollFactor, 1, 2.5f);
-
-        if (mouseScrollFactorClamped != Input.mouseScrollDelta.y / 2)
-        {
-            mouseScrollMem = mouseScrollFactorClamped;
-        }
-
-        camSwingMultiplier = camSwingSpeed / 1000;
-        controls();*/
+        RaycastHit hit; 
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        mouseScrollFactor -= Input.mouseScrollDelta.y / 2;
-        mouseScrollFactorClamped = Mathf.Clamp(mouseScrollFactor, 1, 2.5f);
+        mouseScrollFactor += Input.mouseScrollDelta.y * 0.10f;
+        mouseScrollFactorClamped = Math.Clamp(mouseScrollFactor, 0, 1);
 
-        if (mouseScrollFactorClamped != Input.mouseScrollDelta.y / 2)
+        if (mouseScrollFactor > mouseScrollFactorClamped)
         {
-            mouseScrollMem = mouseScrollFactorClamped;
+            mouseScrollFactor = 1;
+        } else if (mouseScrollFactor < mouseScrollFactorClamped) { 
+            mouseScrollFactor = 0;
         }
 
         controls();
         orbitalRotation_2();
-
-        // print(Time.deltaTime);
-
     }
 
     private void controls()
@@ -83,21 +84,25 @@ public class CameraMovement : MonoBehaviour
         float sine = Mathf.Sin(angle);
         float cos = Mathf.Cos(angle);
 
-        // print("orbitalFact X = " + radius * cos);
-        // print("orbitalFact Z = " + radius * sine);
-        // print("positionalValue = " + positionValue);
-        // print(radius);
-        // print("Mousewheel Scroll Factor = " + mouseScrollFactor);
+        orbitalVector = new Vector3((cam_Radius * cos), 1, (cam_Radius * sine));
 
-        orbitalVector = new Vector3((cam_Radius * cos), 3 - mouseScrollFactorClamped / 3, (cam_Radius * sine));
-
-        angledVector = new Vector3(0, 0 + mouseScrollFactorClamped * 4, 0) + targetObject.transform.position;
+        angledVector = new Vector3(0, 0, 0) + targetObject.transform.position;
 
         heightValueVector = new Vector3(0f, heightValue, 0f);
-        transform.position = angledVector + orbitalVector * mouseScrollFactorClamped + heightValueVector;
+        transform.position = targetObject.transform.position + orbitalVector + heightValueVector;
 
-        Vector3 lookAtOffset = new Vector3(0, 0 + 4f / mouseScrollFactorClamped + cameraAngle, 0);
+        Vector3 lookAtOffset = new Vector3(0, cameraAngle, 0);
         transform.LookAt(targetObject.transform.position + lookAtOffset);
+
+        scrollLerpHeight = Mathf.Lerp(scrollHeightOutValue, scrollHeightInValue, scrollLerpState);
+        scrollLerpRadius = Mathf.Lerp(scrollRadiusOutValue, scrollRadiusInValue, scrollLerpState);
+        scrollLerpFOV = Mathf.Lerp(scrollFOVOutValue, scrollFOVInValue, scrollLerpState);
+
+        heightValue = scrollLerpHeight;
+        radiusValue = scrollLerpRadius;
+        cam.fieldOfView = scrollLerpFOV;
+
+        scrollLerpState = mouseScrollFactorClamped;
 
     }
 
