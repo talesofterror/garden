@@ -16,12 +16,13 @@ public class PlayerMovement : MonoBehaviour
     Vector3 mousePosition;
     Vector3 directionalVector;
     Vector3 targetPosition;
-    GameObject debugSphere;
+    GameObject icon;
     public GameObject cursorIcon;
     GameObject cursorObject;
-    bool dBSphere;
     public GameObject playerObject;
     Rigidbody rB;
+    public bool iconOn;
+    Vector3 cursorYOffset = new Vector3(0, 2f, 0);
 
     GameObject gland;
 
@@ -31,14 +32,12 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         Cursor.visible = false;
-        debugSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        Vector3 cursorYOffset = new Vector3(0, 1.2f, 0);
         cursorObject = Instantiate(cursorIcon, pointerBeacon + cursorYOffset, Quaternion.Euler(0, 180, 0));
         cursorObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         // cursorObject.GetComponent<Collider>().enabled = false;
         cursorObject.SetActive(true);
         rB = GetComponent<Rigidbody>();
-
+        iconOn = false;
 
     }
 
@@ -81,7 +80,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
+        cursorObject.transform.position = new Vector3(pointerBeacon.x, pointerBeacon.y + cursorYOffset.y, pointerBeacon.z);
+        playerTransform = playerObject.transform;
+        //cursorObject.transform.position = new Vector3(pointerBeacon.x, pointerBeacon.y, pointerBeacon.z);
+        cursorObject.transform.LookAt(cam.transform.position);
 
         debug();
 
@@ -95,13 +97,9 @@ public class PlayerMovement : MonoBehaviour
         _mSpeed = moveSpeed * 1000;
 
         rB.velocity = new Vector3(0, 0, 0);
-        playerTransform = playerObject.transform;
 
         PlayerRotation();
         directionalMovement(directionalVector, isRunning());
-
-        cursorObject.transform.position = new Vector3(pointerBeacon.x, pointerBeacon.y, pointerBeacon.z);
-        cursorObject.transform.LookAt(cam.transform.position);
 
     }
 
@@ -116,15 +114,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 directionalMovement(Vector3 dVector, bool running)
     {
+        h = Input.GetAxis("Horizontal"); // get direction 'side to side' aka 'a' and 'd'
+        v = Input.GetAxis("Vertical"); // get direction 'up and down' aka 'w' and 's'
 
         if (running == true)
         {
             accelerate = accelerationSpeed;
         }
         else { accelerate = 1; }
-
-        h = Input.GetAxis("Horizontal"); // get direction 'side to side' aka 'a' and 'd'
-        v = Input.GetAxis("Vertical"); // get direction 'up and down' aka 'w' and 's'
 
         if (h == 0 && v == 0)
         {
@@ -172,8 +169,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(ray, out beaconHit, 1000))
         {
-            pointerBeacon = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
-            /*pointerBeacon = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);*/
+            //pointerBeacon = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
+            pointerBeacon = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);
 
             // beaconHit.point.y will point the player towards the surface hit by the ray
             // but also rotates the player towards the position of the beacon
@@ -185,23 +182,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void debug()
     {
-
-        debugSphere.transform.position = pointerBeacon;
-        debugSphere.GetComponent<Collider>().enabled = true;
-
-        if (dBSphere == false)
-        {
-            debugSphere.SetActive(false);
-        }
-
-        if (dBSphere == true)
-        {
-            debugSphere.SetActive(true);
-        }
-
         if (Input.GetKeyDown(KeyCode.P))
         {
-            dBSphere = !dBSphere;
+            if (iconOn == false)
+            {
+                icon.SetActive(false);
+            }
+
+            if (iconOn == true)
+            {
+                icon.SetActive(true);
+            }
+
             print("debug sphere toggle");
         }
 
