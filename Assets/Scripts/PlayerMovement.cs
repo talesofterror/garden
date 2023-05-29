@@ -26,11 +26,14 @@ public class PlayerMovement : MonoBehaviour
 
     GameObject gland;
 
-
+    int layerNumber = 8;
+    int layerMask;
 
     // Start is called before the first frame update
     void Start()
     {
+        layerMask = 1 << layerNumber;
+
         Cursor.visible = false;
         cursorObject = Instantiate(cursorIcon, cursorYOffset, Quaternion.Euler(0, 180, 0));
         cursorObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -157,7 +160,6 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-
     void PlayerRotation()
     {
 
@@ -166,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit beaconHit;
         Ray ray = cam.ScreenPointToRay(mousePosition);
 
-        if (Physics.Raycast(ray, out beaconHit, 1000))
+        if (Physics.Raycast(ray, out beaconHit, 1000, layerMask))
         {
             pointerBeacon = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
             //pointerBeacon = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);
@@ -201,8 +203,6 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(0, playerTransform.position.y, 0);
         }
-
-        print(Input.GetAxis("Horizontal"));
     }
 
 }
