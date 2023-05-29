@@ -10,9 +10,6 @@ public class CameraMovement : MonoBehaviour
 {
 
     public GameObject targetObject;
-    public Material transparentMaterial;
-    Material materialMemory;
-    Material struckObjectMaterialMemory;
 
     Vector3 targetPosition;
     Vector3 orbitalVector;
@@ -44,6 +41,8 @@ public class CameraMovement : MonoBehaviour
     float heightValue;
     float radiusValue;
 
+    LayerMask layerMask;
+
     [Range(1, 50)] public float radiusOffset;
 
     // Start is called before the first frame update
@@ -53,6 +52,9 @@ public class CameraMovement : MonoBehaviour
         origCamPos = transform.position;
 
         targetPosition = targetObject.transform.position;
+
+        int layerNumber = 9;
+        layerMask = 1 << layerNumber;
 
     }
 
@@ -67,6 +69,7 @@ public class CameraMovement : MonoBehaviour
         Vector3 lookAtOffset;
 
         lookAtOffset = new Vector3(0, cameraAngle, 0);
+        Vector3 heightValueVector = new Vector3(0f, heightValue, 0f);
 
         mouseScrollFactor += Input.mouseScrollDelta.y * 0.10f;
         mouseScrollFactorClamped = Math.Clamp(mouseScrollFactor, 0, 1);
@@ -87,7 +90,6 @@ public class CameraMovement : MonoBehaviour
 
         orbitalVector = new Vector3((cam_Radius * cos), 1, (cam_Radius * sine));
         angledVector = new Vector3(0, 0, 0) + targetObject.transform.position;
-        Vector3 heightValueVector = new Vector3(0f, heightValue, 0f);
 
         controls(orbitalVector, heightValueVector, lookAtOffset);
         orbitalRotation_2();
@@ -96,40 +98,30 @@ public class CameraMovement : MonoBehaviour
     }
 
 
-
+    public Material transparentMaterial;
+    Material struckObjectMaterialMemory;
+    static GameObject struckObject;
+    GameObject struckObjectMemory = struckObject;
+    bool rayHit = false;
 
     // Use a boolean trigger for raycast hit instead 
 
-
-    bool rayHit = false;
     private void obstructionClearanceRaycast(Vector3 heightValueVector)
     {
         Vector3 rayTarget = targetObject.transform.position - (targetObject.transform.position + orbitalVector + heightValueVector);
         Ray ray = new Ray(transform.position, rayTarget);
         RaycastHit hit;
-        GameObject struckObject;
-        GameObject struckObjectMemory;
 
-        if (Physics.Raycast(ray, out hit, Vector3.Distance(transform.position, targetPosition)))
+        if (Physics.Raycast(ray, out hit, Vector3.Distance(transform.position, targetPosition), layerMask))
         {
-            struckObject = hit.transform.gameObject;
-            struckObjectMemory = struckObject;
-            struckObjectMaterialMemory = new Material(struckObjectMemory.GetComponent<MeshRenderer>().sharedMaterial);
-            rayHit = true;
- // materialToggle(hit, struckObject, struckObjectMaterialMemory);
-        } else { rayHit = false; }
+            print("hit");
+        } else { }
 
+        materialToggle();
 
-        void materialToggle(RaycastHit hit, GameObject struckObjectMemory, Material struckObjectMaterialMemory)
+        void materialToggle()
         {
-            if (rayHit == true)
-            {
-                struckObject.GetComponent<MeshRenderer>().material = transparentMaterial;
-            }
-            else 
-            {
-                struckObject.GetComponent<MeshRenderer>().material = struckObjectMaterialMemory;
-            }
+
         }
 
         Debug.DrawRay(transform.position, rayTarget, Color.magenta);

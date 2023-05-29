@@ -7,3 +7,15 @@ fully rolled out:
 	Camera FOV = 43
 	Script Radius Value = 2.94
 	ScriptHeight Value = 7.37
+
+
+~
+
+Direction from two points: 
+
+	Unity says Vector2 - Vector 1
+
+	Forumla: 
+	p = (a, b); q= (A, B)
+	
+	(qB - pb) / (qA - pb)

@@ -37,7 +37,6 @@ public class playerAnimationControls : MonoBehaviour
         if ((forwardPressed && !isWalking) || (controllerForwardPressed && !isWalking))
         {
             animator.SetBool(isWalkingHash, true);
-            print(forwardPressed);
         }
         if (!forwardPressed && isWalking)
         { 
@@ -94,11 +93,11 @@ public class playerAnimationControls : MonoBehaviour
     {
         if (animator.GetBool(isWalkingHash))
         {
-            print("Walking");
+            //print("Walking");
         }
         if (animator.GetBool(isRunningHash))
         {
-            print("Running");
+            //print("Running");
         }
     }
 }
