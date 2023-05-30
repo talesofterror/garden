@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngineInternal;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 
 public class CameraMovement : MonoBehaviour
 {
@@ -102,9 +102,8 @@ public class CameraMovement : MonoBehaviour
     Material struckObjectMaterialMemory;
     static GameObject struckObject;
     GameObject struckObjectMemory = struckObject;
-    bool rayHit = false;
-
-    // Use a boolean trigger for raycast hit instead 
+    bool alreadyHit = false;
+    bool infoGathered = false;
 
     private void obstructionClearanceRaycast(Vector3 heightValueVector)
     {
@@ -114,14 +113,49 @@ public class CameraMovement : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Vector3.Distance(transform.position, targetPosition), layerMask))
         {
-            print("hit");
-        } else { }
+            if (!alreadyHit)
+            {
+                materialToggle();
+            } 
+            else { return; }
+        } 
+        else 
+        {
+            if (struckObject == null) { alreadyHit = false;  return; }
+            else
+            {
+                if (infoGathered)
+                {
+                struckObjectMemory.GetComponent<MeshRenderer>().material = struckObjectMaterialMemory;
+                struckObject = null;
+                struckObjectMemory = null;
+                alreadyHit = false;
+                infoGathered = false;
+                }
+            }
+        }
 
-        materialToggle();
+        /*
+         * pseudo code: 
+         * 
+         * if no rayhit
+         *  
+         */
 
         void materialToggle()
         {
-
+            if (!infoGathered)
+            {
+                struckObject = hit.transform.gameObject;
+                struckObjectMaterialMemory = struckObject.GetComponent<MeshRenderer>().material;
+                struckObjectMemory = struckObject;
+                infoGathered = true;
+            } 
+            else
+            {
+                hit.transform.gameObject.GetComponent<MeshRenderer>().material = transparentMaterial;
+                alreadyHit = true;            
+            }
         }
 
         Debug.DrawRay(transform.position, rayTarget, Color.magenta);
