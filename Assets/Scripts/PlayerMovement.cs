@@ -1,3 +1,4 @@
+using UnityEditor.UI;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -12,16 +13,16 @@ public class PlayerMovement : MonoBehaviour
 
     public Camera cam;
     Transform playerTransform;
-    Vector3 pointerBeacon;
+    Vector3 beaconVector;
     Vector3 mousePosition;
     Vector3 directionalVector;
     Vector3 targetPosition;
-    GameObject icon;
-    public GameObject cursorIcon;
-    GameObject cursorObject;
+    GameObject icon;    
+    public GameObject beaconObject;
+    Renderer beaconRenderer;
     public GameObject playerObject;
     Rigidbody rB;
-    public bool iconOn;
+    public bool iconOn = true;
     Vector3 cursorYOffset = new Vector3(0, 2f, 0);
 
     GameObject gland;
@@ -35,11 +36,11 @@ public class PlayerMovement : MonoBehaviour
         layerMask = 1 << layerNumber;
 
         Cursor.visible = false;
-        cursorObject = Instantiate(cursorIcon, cursorYOffset, Quaternion.Euler(0, 180, 0));
-        cursorObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        cursorObject.SetActive(true);
+        beaconObject = Instantiate(beaconObject, cursorYOffset, Quaternion.Euler(0, 0, 0));
+        beaconObject.transform.parent = this.gameObject.transform;
+        beaconObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        beaconRenderer = beaconObject.GetComponent<MeshRenderer>();
         rB = GetComponent<Rigidbody>();
-        iconOn = false;
 
     }
 
@@ -82,10 +83,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        cursorObject.transform.position = new Vector3(pointerBeacon.x, pointerBeacon.y + cursorYOffset.y, pointerBeacon.z);
         playerTransform = playerObject.transform;
-        //cursorObject.transform.position = new Vector3(pointerBeacon.x, pointerBeacon.y, pointerBeacon.z);
-        cursorObject.transform.LookAt(cam.transform.position);
+        beaconObject.transform.position = new Vector3(beaconVector.x, beaconVector.y + cursorYOffset.y, beaconVector.z);
+        beaconObject.transform.LookAt(cam.transform.position);
 
         debug();
 
@@ -170,14 +170,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(ray, out beaconHit, 1000, layerMask))
         {
-            pointerBeacon = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
+            beaconVector = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
             //pointerBeacon = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);
 
             // beaconHit.point.y will point the player towards the surface hit by the ray
             // but also rotates the player towards the position of the beacon
         }
 
-        playerTransform.LookAt(pointerBeacon);
+        playerTransform.LookAt(beaconVector);
 
     }
 
@@ -185,23 +185,27 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (iconOn == false)
-            {
-                icon.SetActive(false);
-            }
-
             if (iconOn == true)
             {
-                icon.SetActive(true);
+                beaconRenderer.enabled = false;
+            } else
+            {
+                beaconRenderer.enabled = true;
             }
 
-            print("debug sphere toggle");
+            iconOn = iconOn ? false : true;
+
+            print("cursor sphere toggle");
         }
 
+        ReturnHome();
 
-        if (Input.GetKey(KeyCode.R))
+        void ReturnHome()
         {
-            transform.position = new Vector3(0, playerTransform.position.y, 0);
+            if (Input.GetKey(KeyCode.R))
+            {
+                transform.position = new Vector3(0, playerTransform.position.y, 0);
+            }
         }
     }
 

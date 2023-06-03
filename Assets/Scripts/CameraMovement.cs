@@ -32,8 +32,8 @@ public class CameraMovement : MonoBehaviour
     public float scrollFOVOutValue = 43;
     public float scrollFOVInValue = 22;
     public float cameraSwingPosition = 0f;
-    public float swingControlOffset;
-    public float camSwingMultiplier = 1.78f;
+    float swingControlOffset;
+    public float swingControlSpeed = 1.78f;
 
 
     float cam_Radius;
@@ -135,13 +135,6 @@ public class CameraMovement : MonoBehaviour
             }
         }
 
-        /*
-         * pseudo code: 
-         * 
-         * if no rayhit
-         *  
-         */
-
         void materialToggle()
         {
             if (!infoGathered)
@@ -187,17 +180,15 @@ public class CameraMovement : MonoBehaviour
 
     private void orbitalRotation_2()
     {
-        // this may have fixed the build discrepancy issue with camera panning
-        // won't know until i build
-
+  
         if (Input.GetKey(KeyCode.Q))
         {
-            swingControlOffset += camSwingMultiplier * Time.deltaTime;
+            swingControlOffset += swingControlSpeed * Time.deltaTime;
 
         }
         if (Input.GetKey(KeyCode.E))
         {
-            swingControlOffset -= camSwingMultiplier * Time.deltaTime;
+            swingControlOffset -= swingControlSpeed * Time.deltaTime;
         }
     }
 }
