@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     public float alertRadius;
     public float amnesiaRadius;
     GameObject target;
-    SphereCollider collider;
+    SphereCollider sphCollider;
 
     void OnDrawGizmos()
     {
@@ -35,14 +35,14 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        collider = GetComponent<SphereCollider>();
+        sphCollider = GetComponent<SphereCollider>();
     }
 
     public float speed;
     Vector3 targetPosition;
     void Update()
     {
-        collider.radius = alertRadius;
+        sphCollider.radius = alertRadius;
 
         float time = Time.deltaTime / speed;
         Vector3 movementFactor = transform.position + transform.forward/100;
