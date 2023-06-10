@@ -61,9 +61,9 @@
     <Compile Include="Assets\Scripts\playerAnimationControls.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\rotate.cs" />
+    <Compile Include="Assets\lookAtScript.cs" />
     <Compile Include="Assets\CatHead.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
-    <Compile Include="Assets\lookAtScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ideas.txt" />

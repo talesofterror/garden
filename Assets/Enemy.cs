@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -16,6 +15,10 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, alertRadius);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, amnesiaRadius);
     }
@@ -38,14 +41,14 @@ public class Enemy : MonoBehaviour
         sphCollider = GetComponent<SphereCollider>();
     }
 
-    public float speed;
+    public float speedMultiplier;
     Vector3 targetPosition;
     void Update()
     {
         sphCollider.radius = alertRadius;
 
-        float time = Time.deltaTime / speed;
-        Vector3 movementFactor = transform.position + transform.forward/100;
+        float time = Time.deltaTime * speedMultiplier;
+        Vector3 movementFactor = transform.position + transform.forward/100 * time;
         float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
 
 

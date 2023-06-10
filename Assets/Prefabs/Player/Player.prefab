@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 8992745779197780745}
   m_Layer: 2
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,8 +283,9 @@ MonoBehaviour:
   accelerationSpeed: 2
   yPlacement: 0
   cam: {fileID: 0}
-  cursorIcon: {fileID: 0}
+  beaconObject: {fileID: 8395328994965664688, guid: a64985e10e401934287a5148c79809d1, type: 3}
   playerObject: {fileID: 6455028312791890907}
+  iconOn: 1
 --- !u!54 &6149023028184060602
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -299,7 +300,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 2
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 1
 --- !u!65 &5333663496279186715
 BoxCollider:
@@ -831,7 +832,7 @@ PrefabInstance:
     - target: {fileID: -3194004854572443047, guid: 4cca9621ff765ba42bdfc37dac3e6d8d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a080ee6d5f716f44f863f455642fcd1c, type: 2}
+      objectReference: {fileID: 2100000, guid: 11e89b78e323dab438bca31ade36f80d, type: 2}
     - target: {fileID: -2917595415895650997, guid: 4cca9621ff765ba42bdfc37dac3e6d8d, type: 3}
       propertyPath: m_Layer
       value: 6
