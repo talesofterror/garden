@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     {
         layerMask = 1 << layerNumber;
 
-        Cursor.visible = false;
+        Cursor.visible = true;
         beaconObject = Instantiate(beaconObject, cursorYOffset, Quaternion.Euler(0, 0, 0));
         beaconObject.transform.parent = this.gameObject.transform;
         beaconObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);

@@ -1,3 +1,22 @@
+
+
+dialogue system: 
+
+- hover over a character to obtain "talk" option 
+	- based on range 
+	- (are beings hostile in this world?)
+- click to start -- camera pans in
+- to be used also for signage as well 
+- could create digalogable objects? 
+	- target:extends base class (singleton?)
+	- fields: 
+		- name 
+		- text 
+		- speech options? 
+	- click to progress or choose options 
+
+
+
 fully rolled in: 
 	Camera FOV = 22
 	Script Radius Value = 19.4
