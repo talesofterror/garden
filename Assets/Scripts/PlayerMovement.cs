@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -68,6 +69,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // print(collision.gameObject.tag);
+    }
+
+    
+    private void OnTriggerEnter(Collider other) {
+        
+        if (other.CompareTag("Talker")) {
+            print("talker");
+            other.GetComponent<DialogueTrigger>().TriggerDialogue();
+        }
     }
 
     void Update()

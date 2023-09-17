@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngineInternal;
 
-[ExecuteInEditMode]
+// [ExecuteInEditMode]
 
 public class CameraMovement : MonoBehaviour
 {
@@ -141,14 +141,16 @@ public class CameraMovement : MonoBehaviour
      * global variables for obstructionClearance():
      */
     public Material transparentMaterial;
-    Material struckObjectMaterialMemory;
     static GameObject struckObject;
-    GameObject struckObjectMemory = struckObject;
+    Material struckObjectMaterialMemory;
+
     bool alreadyHit = false;
     bool infoGathered = false;
 
     private void obstructionClearance(Vector3 heightValueVector)
     {
+        GameObject struckObjectMemory = struckObject;
+
         Vector3 rayTarget = targetObject.transform.position - (targetObject.transform.position + orbitalVector + heightValueVector);
         Ray ray = new Ray(transform.position, rayTarget);
         RaycastHit hit;
