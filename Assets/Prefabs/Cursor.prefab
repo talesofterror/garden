@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 8395328994965664684}
   - component: {fileID: 8395328994965664691}
   - component: {fileID: 8395328994965664690}
-  m_Layer: 2
-  m_Name: tempcursor
+  - component: {fileID: -3560350633177459943}
+  m_Layer: 0
+  m_Name: Cursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,8 +26,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8395328994965664688}
-  m_LocalRotation: {x: -0.1530245, y: 0.6702285, z: 0.14409374, w: 0.71176845}
-  m_LocalPosition: {x: -52.315193, y: 2.0096827, z: -11.436003}
+  m_LocalRotation: {x: -0.014141955, y: 0.9690411, z: 0.23977661, w: 0.05715376}
+  m_LocalPosition: {x: -1.8647425, y: 2.009681, z: 40.198616}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-3560350633177459943
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8395328994965664688}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000002, y: 0.99999994, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

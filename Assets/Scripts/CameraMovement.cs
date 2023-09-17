@@ -13,7 +13,6 @@ public class CameraMovement : MonoBehaviour
 
     Vector3 targetPosition;
     Vector3 orbitalVector;
-    Vector3 angledVector;
 
     Vector3 origCamPos;
 
@@ -31,15 +30,15 @@ public class CameraMovement : MonoBehaviour
     public float scrollRadiusInValue = 19.4f;
     public float scrollFOVOutValue = 43;
     public float scrollFOVInValue = 22;
-    public float cameraSwingPosition = 0f;
-    float swingControlOffset;
+    public float radiusPosition = 0f;
+    float orbitControlOffset;
     public float swingControlSpeed = 1.78f;
 
 
     float cam_Radius;
     Vector3 heightValueVector;
-    float heightValue;
-    float radiusValue;
+    float scrollHeight;
+    float scrollRadius;
 
     LayerMask layerMask;
 
@@ -59,15 +58,14 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        Vector3 heightValueVector = new Vector3(0f, heightValue, 0f);
+        Vector3 heightValueVector = new Vector3(0f, scrollHeight, 0f);
 
-        cam_Radius = (Vector3.Distance(origCamPos, targetPosition) * 0.3f) + radiusValue;
-        float angle = (Mathf.PI * 1.52f - (cameraSwingPosition + swingControlOffset));
+        cam_Radius = (Vector3.Distance(origCamPos, targetPosition) * 0.3f) + scrollRadius;
+        float angle = (Mathf.PI * 1.52f - (radiusPosition + orbitControlOffset));
         float sine = Mathf.Sin(angle);
         float cos = Mathf.Cos(angle);
 
         orbitalVector = new Vector3((cam_Radius * cos), 1, (cam_Radius * sine));
-        angledVector = new Vector3(0, 0, 0) + targetObject.transform.position;
 
         cameraTargeting(orbitalVector, heightValueVector);
 
@@ -100,12 +98,12 @@ public class CameraMovement : MonoBehaviour
   
         if (Input.GetKey(KeyCode.Q))
         {
-            swingControlOffset += swingControlSpeed * Time.deltaTime;
+            orbitControlOffset += swingControlSpeed * Time.deltaTime;
 
         }
         if (Input.GetKey(KeyCode.E))
         {
-            swingControlOffset -= swingControlSpeed * Time.deltaTime;
+            orbitControlOffset -= swingControlSpeed * Time.deltaTime;
         }
     }
 
@@ -116,7 +114,7 @@ public class CameraMovement : MonoBehaviour
      */
     private void scrollingBehavior()
     {
-        mouseScrollFactor += Input.mouseScrollDelta.y * 0.10f;
+        mouseScrollFactor += Input.mouseScrollDelta.y * 0.07f;
         mouseScrollFactorClamped = Math.Clamp(mouseScrollFactor, 0, 1);
 
         if (mouseScrollFactor > mouseScrollFactorClamped)
@@ -132,8 +130,8 @@ public class CameraMovement : MonoBehaviour
         scrollLerpRadius = Mathf.Lerp(scrollRadiusOutValue, scrollRadiusInValue, scrollLerpState);
         scrollLerpFOV = Mathf.Lerp(scrollFOVOutValue, scrollFOVInValue, scrollLerpState);
 
-        heightValue = scrollLerpHeight;
-        radiusValue = scrollLerpRadius;
+        scrollHeight = scrollLerpHeight;
+        scrollRadius = scrollLerpRadius;
         cam.fieldOfView = scrollLerpFOV;
 
         scrollLerpState = mouseScrollFactorClamped;

@@ -6,8 +6,8 @@ public class PlayerMovement : MonoBehaviour
     float _mSpeed;
     float accelerate;
     public float accelerationSpeed = 2f;
-    float h;
-    float v;
+    float localX;
+    float localZ;
     public float yPlacement;
 
     public Camera cam;
@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 mousePosition;
     Vector3 directionalVector;
     Vector3 targetPosition;
-    GameObject icon;    
     public GameObject beaconObject;
     Renderer beaconRenderer;
     public GameObject playerObject;
@@ -33,12 +32,13 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         layerMask = 1 << layerNumber;
+        directionalVector = new Vector3(0, 0, 0);
 
         Cursor.visible = true;
         beaconObject = Instantiate(beaconObject, cursorYOffset, Quaternion.Euler(0, 0, 0));
         beaconObject.transform.parent = this.gameObject.transform;
         beaconObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        beaconRenderer = beaconObject.GetComponent<MeshRenderer>();
+        beaconRenderer = beaconObject.GetComponent<Renderer>();
         rB = GetComponent<Rigidbody>();
 
     }
@@ -70,23 +70,27 @@ public class PlayerMovement : MonoBehaviour
         // print(collision.gameObject.tag);
     }
 
-    private void onTriggerEnter()
-    {
-        if (tag == "EnvironmentalBorder")
-        {
-
-            print("Environmental Trigger");
-
-        }
-    }
-
     void Update()
     {
         playerTransform = playerObject.transform;
         beaconObject.transform.position = new Vector3(beaconVector.x, beaconVector.y + cursorYOffset.y, beaconVector.z);
         beaconObject.transform.LookAt(cam.transform.position);
 
+        mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+
+        Ray ray = cam.ScreenPointToRay(mousePosition);
+
+        if (Physics.Raycast(ray, out beaconHit, 1000, layerMask))
+        {
+            // beaconVector = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
+            beaconVector = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);
+
+            // beaconHit.point.y will point the player towards the surface hit by the ray
+            // but also rotates the player towards the position of the beacon
+        }
+
         debug();
+        PlayerRotation();
 
     }
 
@@ -99,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
 
         rB.velocity = new Vector3(0, 0, 0);
 
-        PlayerRotation();
         directionalMovement(directionalVector, isRunning());
 
     }
@@ -115,8 +118,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 directionalMovement(Vector3 dVector, bool running)
     {
-        h = Input.GetAxis("Horizontal"); // get direction 'side to side' aka 'a' and 'd'
-        v = Input.GetAxis("Vertical"); // get direction 'up and down' aka 'w' and 's'
+        localX = Input.GetAxis("Horizontal"); // get direction 'side to side' aka 'a' and 'd'
+        localZ = Input.GetAxis("Vertical"); // get direction 'up and down' aka 'w' and 's'
 
         if (running == true)
         {
@@ -124,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else { accelerate = 1; }
 
-        if (h == 0 && v == 0)
+        if (localX == 0 && localZ == 0)
         {
             rB.isKinematic = true;
         }
@@ -136,19 +139,19 @@ public class PlayerMovement : MonoBehaviour
         // print("h = " + h + " | v = " + v);
 
 
-        dVector = new Vector3(h, 1, v); // assigns direction floats to  a new Vector value
+        dVector = new Vector3(localX, 1, localZ); // assigns direction floats to  a new Vector value
 
         dVector = Quaternion.Euler(1, playerTransform.eulerAngles.y, 1) * dVector; // factors the object's current y rotation into dVector
         rB.AddForce(dVector * (_mSpeed * accelerate), ForceMode.Force);
 
         // print("Move target position = " + targetPosition + ".");
 
-/*        if (playerTransform.position.y != yPlacement)
-        {
-            playerTransform.position = new Vector3(playerTransform.position.x, yPlacement, playerTransform.position.z);
-        }
+        /*        if (playerTransform.position.y != yPlacement)
+                {
+                    playerTransform.position = new Vector3(playerTransform.position.x, yPlacement, playerTransform.position.z);
+                }
 
-        playerTransform.position = new Vector3(playerTransform.position.x, yPlacement, playerTransform.position.z);*/
+                playerTransform.position = new Vector3(playerTransform.position.x, yPlacement, playerTransform.position.z);*/
 
         // The two statements above can be removed, which will allow the player to traverse in the y direction
         // But that leads to it's own set of problems. I need to account for the current position of the 
@@ -159,22 +162,9 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    RaycastHit beaconHit;
     void PlayerRotation()
     {
-
-        mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-
-        RaycastHit beaconHit;
-        Ray ray = cam.ScreenPointToRay(mousePosition);
-
-        if (Physics.Raycast(ray, out beaconHit, 1000, layerMask))
-        {
-            beaconVector = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
-            //pointerBeacon = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);
-
-            // beaconHit.point.y will point the player towards the surface hit by the ray
-            // but also rotates the player towards the position of the beacon
-        }
 
         playerTransform.LookAt(beaconVector);
 
@@ -182,17 +172,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void debug()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown("p"))
         {
-            if (iconOn == true)
-            {
-                beaconRenderer.enabled = false;
-            } else
-            {
-                beaconRenderer.enabled = true;
-            }
 
-            iconOn = iconOn ? false : true;
+            // iconOn = iconOn ? false : true;
 
             print("cursor sphere toggle");
         }

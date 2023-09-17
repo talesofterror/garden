@@ -832,7 +832,7 @@ PrefabInstance:
     - target: {fileID: -3194004854572443047, guid: 4cca9621ff765ba42bdfc37dac3e6d8d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 11e89b78e323dab438bca31ade36f80d, type: 2}
+      objectReference: {fileID: 2100000, guid: 32284b4eb790e024b91ca3cc44d1ee39, type: 2}
     - target: {fileID: -2917595415895650997, guid: 4cca9621ff765ba42bdfc37dac3e6d8d, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -915,7 +915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4cca9621ff765ba42bdfc37dac3e6d8d, type: 3}
       propertyPath: m_Name
-      value: player.rig_subdivision
+      value: player mesh
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4cca9621ff765ba42bdfc37dac3e6d8d, type: 3}
       propertyPath: m_Layer

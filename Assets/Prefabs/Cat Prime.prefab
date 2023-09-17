@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5783749640672411015}
   m_Layer: 2
-  m_Name: Orb
+  m_Name: Cat Prime
   m_TagString: rigidbody toy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

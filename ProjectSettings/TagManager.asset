@@ -7,6 +7,7 @@ TagManager:
   - EnvironmentalBorder
   - Ground
   - rigidbody toy
+  - Talker
   layers:
   - Default
   - TransparentFX
