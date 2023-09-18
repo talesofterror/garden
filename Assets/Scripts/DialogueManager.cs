@@ -13,7 +13,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void StartDialogue (Dialogue dialogue) {
-        print("Dialogue started with " + dialogue.Name);
+        print("Dialogue started with " + dialogue.name);
     }
 
 }

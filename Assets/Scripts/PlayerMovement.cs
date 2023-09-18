@@ -1,3 +1,4 @@
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,22 +10,16 @@ public class PlayerMovement : MonoBehaviour
     public float accelerationSpeed = 2f;
     float localX;
     float localZ;
-    public float yPlacement;
 
     public Camera cam;
     Transform playerTransform;
-    Vector3 beaconVector;
+    Vector3 targetGroundVector;
     Vector3 mousePosition;
-    Vector3 directionalVector;
-    Vector3 targetPosition;
     public GameObject beaconObject;
     Renderer beaconRenderer;
     public GameObject playerObject;
     Rigidbody rB;
-    public bool iconOn = true;
     Vector3 cursorYOffset = new Vector3(0, 2f, 0);
-
-    GameObject gland;
 
     int layerNumber = 8;
     int layerMask;
@@ -32,8 +27,9 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerTransform = playerObject.transform;
+
         layerMask = 1 << layerNumber;
-        directionalVector = new Vector3(0, 0, 0);
 
         Cursor.visible = true;
         beaconObject = Instantiate(beaconObject, cursorYOffset, Quaternion.Euler(0, 0, 0));
@@ -49,42 +45,47 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.gameObject.tag == "EnvironmentalBorder")
         {
-
             //rB.isKinematic = false;
             print("Environmental Collision");
             rB.collisionDetectionMode = CollisionDetectionMode.Continuous;
-
         }
 
 
         if (collision.gameObject.tag == "rigidbody toy")
         {
-
             //rB.isKinematic = false;
             print("Toy Collision");
-
             rB.collisionDetectionMode = CollisionDetectionMode.Continuous;
-
-
         }
 
         // print(collision.gameObject.tag);
     }
+    bool talking;
 
-    
-    private void OnTriggerEnter(Collider other) {
-        
-        if (other.CompareTag("Talker")) {
-            print("talker");
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.CompareTag("Talker"))
+        {
+            talking = true;
             other.GetComponent<DialogueTrigger>().TriggerDialogue();
         }
+
+    }
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.CompareTag("Talker"))
+        {
+            talking = false;
+            other.GetComponent<DialogueTrigger>().TriggerDialogue();
+        }
+
     }
 
     void Update()
     {
-        playerTransform = playerObject.transform;
-        beaconObject.transform.position = new Vector3(beaconVector.x, beaconVector.y + cursorYOffset.y, beaconVector.z);
-        beaconObject.transform.LookAt(cam.transform.position);
+
 
         mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
 
@@ -93,11 +94,15 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(ray, out beaconHit, 1000, layerMask))
         {
             // beaconVector = new Vector3(beaconHit.point.x, playerTransform.position.y, beaconHit.point.z);
-            beaconVector = new Vector3(beaconHit.point.x, beaconHit.point.y, beaconHit.point.z);
+            targetGroundVector = new Vector3(beaconHit.point.x, 0, beaconHit.point.z);
 
             // beaconHit.point.y will point the player towards the surface hit by the ray
             // but also rotates the player towards the position of the beacon
         }
+
+        Vector3 beaconOffsetVector = new Vector3(0, 0 + cursorYOffset.y, 0);
+        beaconObject.transform.position = targetGroundVector + beaconOffsetVector;
+        beaconObject.transform.LookAt(cam.transform.position);
 
         debug();
         PlayerRotation();
@@ -108,13 +113,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
         _mSpeed = moveSpeed * 1000;
-
         rB.velocity = new Vector3(0, 0, 0);
-
-        directionalMovement(directionalVector, isRunning());
-
+        directionalMovement(isRunning());
     }
 
     private bool isRunning()
@@ -126,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         else { return false; }
     }
 
-    private Vector3 directionalMovement(Vector3 dVector, bool running)
+    private Vector3 directionalMovement(bool running)
     {
         localX = Input.GetAxis("Horizontal"); // get direction 'side to side' aka 'a' and 'd'
         localZ = Input.GetAxis("Vertical"); // get direction 'up and down' aka 'w' and 's'
@@ -149,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
         // print("h = " + h + " | v = " + v);
 
 
-        dVector = new Vector3(localX, 1, localZ); // assigns direction floats to  a new Vector value
+        Vector3 dVector = new Vector3(localX, 0, localZ); // assigns direction floats to  a new Vector value
 
         dVector = Quaternion.Euler(1, playerTransform.eulerAngles.y, 1) * dVector; // factors the object's current y rotation into dVector
         rB.AddForce(dVector * (_mSpeed * accelerate), ForceMode.Force);
@@ -176,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
     void PlayerRotation()
     {
 
-        playerTransform.LookAt(beaconVector);
+        playerTransform.LookAt(targetGroundVector);
 
     }
 

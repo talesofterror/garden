@@ -8030,7 +8030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    Name: Cat Prime
+    name: Cat (Primero)
     sentences:
     - You must be so confused. Waking up in a place like this, having to relearn
       where you are. I feel bad for you, truly.
@@ -8052,7 +8052,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.38
+  m_Radius: 0.56
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &815406006 stripped
 Transform:
@@ -32156,6 +32156,14 @@ PrefabInstance:
     - target: {fileID: 6149023028184060601, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149023028184060602, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149023028184060602, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
+      propertyPath: m_Constraints
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
