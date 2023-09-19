@@ -4868,7 +4868,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e4bb0f383d77185498e0cc07a3adc9c5, type: 2}
     - target: {fileID: 919132149155446097, guid: b21ded7d95aae834891d03e1ced6be60, type: 3}
       propertyPath: m_Name
-      value: sphere with UV reversed normals fbx
+      value: background globe
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b21ded7d95aae834891d03e1ced6be60, type: 3}
@@ -7704,6 +7704,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8661084913278702905, guid: 08d231c14420bdf448967047464c62f1, type: 3}
   m_PrefabInstance: {fileID: 1608622070}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &765517511 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1527667205380671855, guid: bda8f2a4bc9ad2e4db1621ff141e69a2, type: 3}
+  m_PrefabInstance: {fileID: 183913763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &771904099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8661084913278702905, guid: 08d231c14420bdf448967047464c62f1, type: 3}
@@ -26641,6 +26652,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3c0020fbd057840a5d9ad527971d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameText: {fileID: 765517511}
+  dialogueText: {fileID: 1804069077}
 --- !u!4 &1596225239
 Transform:
   m_ObjectHideFlags: 0
@@ -29541,6 +29554,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 75fd5321414276945a14afa390e3990e, type: 3}
+--- !u!114 &1804069077 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1527667206317018631, guid: bda8f2a4bc9ad2e4db1621ff141e69a2, type: 3}
+  m_PrefabInstance: {fileID: 183913763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1808172327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32158,8 +32182,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6149023028184060602, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
+      propertyPath: m_Mass
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149023028184060602, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6149023028184060602, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
       propertyPath: m_Constraints
