@@ -1,4 +1,8 @@
-
+Character creation: 
+ - Race
+	- RGB color picker
+ - Gender
+	- Yes / No
 
 dialogue system: 
 

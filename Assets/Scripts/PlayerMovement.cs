@@ -1,5 +1,3 @@
-using TreeEditor;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
