@@ -15,27 +15,34 @@ public class PlayerMovement : MonoBehaviour
     Transform playerTransform;
     Vector3 targetGroundVector;
     Vector3 mousePosition;
-    public GameObject beaconObject;
+    public GameObject beaconGameObject;
     Renderer beaconRenderer;
-    public GameObject playerObject;
+    public GameObject playerGameObject;
     Rigidbody rB;
     Vector3 cursorYOffset = new Vector3(0, 2f, 0);
 
     int layerNumber = 8;
     int layerMask;
 
+    public enum PlayerState {
+        hoverSelectableTalker,
+        unengaged
+    }
+    public PlayerState playerState = new PlayerState();
+
     // Start is called before the first frame update
     void Start()
     {
-        playerTransform = playerObject.transform;
+        playerState = PlayerState.unengaged;
+        playerTransform = playerGameObject.transform;
 
         layerMask = 1 << layerNumber;
 
         Cursor.visible = true;
-        beaconObject = Instantiate(beaconObject, cursorYOffset, Quaternion.Euler(0, 0, 0));
-        beaconObject.transform.parent = this.gameObject.transform;
-        beaconObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        beaconRenderer = beaconObject.GetComponent<Renderer>();
+        beaconGameObject = Instantiate(beaconGameObject, cursorYOffset, Quaternion.Euler(0, 0, 0));
+        beaconGameObject.transform.parent = this.gameObject.transform;
+        beaconGameObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        beaconRenderer = beaconGameObject.GetComponent<Renderer>();
         rB = GetComponent<Rigidbody>();
 
     }
@@ -67,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("Talker"))
         {
-            talking = true;
+            playerState = PlayerState.hoverSelectableTalker;
             other.GetComponent<DialogueTrigger>().TriggerDialogue();
         }
 
@@ -77,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("Talker"))
         {
-            talking = false;
+            playerState = PlayerState.unengaged;
             other.GetComponent<DialogueTrigger>().TriggerDialogue();
         }
 
@@ -101,8 +108,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Vector3 beaconOffsetVector = new Vector3(0, 0 + cursorYOffset.y, 0);
-        beaconObject.transform.position = targetGroundVector + beaconOffsetVector;
-        beaconObject.transform.LookAt(cam.transform.position);
+        beaconGameObject.transform.position = targetGroundVector + beaconOffsetVector;
+        beaconGameObject.transform.LookAt(cam.transform.position);
 
         debug();
         PlayerRotation();

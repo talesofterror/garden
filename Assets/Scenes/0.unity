@@ -8049,9 +8049,9 @@ MonoBehaviour:
       in hell. A hell, if you want. You'll never win here. Don't try it.
     - 'But if you just use your time to wander and appreciate you''ll live as long
       as you want. But... good luck keeping it up. '
-    - Eventually you're giong to self destruct, either by mishap or by way of a misguided
+    - Eventually you're going to self destruct, either by mishap or by way of a misguided
       self-preservation instinct.
-    - 'When you''re reborn, come to me and i''ll explain more. '
+    - 'When you''re reborn, come to me and I''ll explain more. '
 --- !u!135 &806235338
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -26654,6 +26654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 765517511}
   dialogueText: {fileID: 1804069077}
+  dialogueState: 0
 --- !u!4 &1596225239
 Transform:
   m_ObjectHideFlags: 0
@@ -32137,6 +32138,18 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 6149023028184060600, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
+      propertyPath: moveSpeed
+      value: 0.568
+      objectReference: {fileID: 0}
+    - target: {fileID: 6149023028184060600, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
+      propertyPath: beaconGameObject
+      value: 
+      objectReference: {fileID: 8395328994965664688, guid: a64985e10e401934287a5148c79809d1, type: 3}
+    - target: {fileID: 6149023028184060600, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
+      propertyPath: playerGameObject
+      value: 
+      objectReference: {fileID: 228728439}
     - target: {fileID: 6149023028184060601, guid: d0c55d4800c040b489be1fac9370a345, type: 3}
       propertyPath: m_RootOrder
       value: 11

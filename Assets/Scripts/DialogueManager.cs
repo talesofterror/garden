@@ -13,28 +13,34 @@ public class DialogueManager : MonoBehaviour
 
     public Queue<string> sentences;
 
-    private enum dialogueState
+    public enum DialogueState
     {
         Prompt,
         ClickThru,
         End
     }
-    // Start is called before the first frame update
+
+    public DialogueState dialogueState = new DialogueState();
+
     void Start()
     {
         sentences = new Queue<string>();
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            DisplayNextSentence();
+        if (dialogueState == DialogueState.Prompt) {
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
+            {
+                DisplayNextSentence();
+                
+            }
         }
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
         Debug.Log("Click to talk to " + dialogue.name);
+        dialogueState = DialogueState.Prompt;
 
         nameText.text = dialogue.name;
 
@@ -44,8 +50,6 @@ public class DialogueManager : MonoBehaviour
         {
             sentences.Enqueue(sentence);
         }
-
-        DisplayNextSentence();
 
     }
 
