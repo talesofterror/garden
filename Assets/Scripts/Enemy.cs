@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float alertRadius;
-    public float amnesiaRadius;
+    public float alertRadius; // cyan
+    public float amnesiaRadius; // yellow
     GameObject target;
+    Vector3 targetPosition;
     SphereCollider sphCollider;
+
+        void Start()
+    {
+        sphCollider = GetComponent<SphereCollider>();
+    }
 
     void OnDrawGizmos()
     {
@@ -30,17 +36,14 @@ public class Enemy : MonoBehaviour
             alerted = true;
             target = other.transform.gameObject;
             targetPosition = target.transform.position;
-        } else { alerted = false; }
+        }
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        sphCollider = GetComponent<SphereCollider>();
-    }
+
 
     public float speedMultiplier;
-    Vector3 targetPosition;
+    
     void Update()
     {
         sphCollider.radius = alertRadius;
@@ -52,10 +55,10 @@ public class Enemy : MonoBehaviour
 
         if (alerted)
         {
-            Vector3 targetLookAtVector = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
-            targetPosition = target.transform.position;
+            Vector3 movementTarget = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+            targetPosition = movementTarget;
             transform.position = movementFactor;
-            transform.LookAt(targetLookAtVector);
+            transform.LookAt(movementTarget);
         }
         if (distanceToTarget > amnesiaRadius)
         {

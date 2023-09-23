@@ -7,7 +7,11 @@ public class DialogueTrigger : MonoBehaviour
 
     public void TriggerDialogue ()
     {
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        UISingleton.uiSingleton.diaglogueManager.StartDialogue(dialogue);
+    }
+
+    public void EndDialogue () {
+      UISingleton.uiSingleton.diaglogueManager.sentences.Clear();
     }
 
 }
