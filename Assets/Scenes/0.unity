@@ -1885,6 +1885,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58391d2d77bcf7a45acabf036da0df82, type: 3}
+--- !u!114 &117405460 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1527667205795128865, guid: bda8f2a4bc9ad2e4db1621ff141e69a2, type: 3}
+  m_PrefabInstance: {fileID: 183913763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &122646826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6453,6 +6464,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8661084913278702905, guid: 08d231c14420bdf448967047464c62f1, type: 3}
   m_PrefabInstance: {fileID: 612890970}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &615320226 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1527667205609096674, guid: bda8f2a4bc9ad2e4db1621ff141e69a2, type: 3}
+  m_PrefabInstance: {fileID: 183913763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &640324480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8057,15 +8079,7 @@ MonoBehaviour:
   dialogue:
     name: Cat (Primero)
     sentences:
-    - You must be so confused. Waking up in a place like this, having to relearn
-      where you are. I feel bad for you, truly.
-    - I'm going to be very direct with you, because I feel like you deserve it. You're
-      in hell. A hell, if you want. You'll never win here. Don't try it.
-    - 'But if you just use your time to wander and appreciate you''ll live as long
-      as you want. But... good luck keeping it up. '
-    - Eventually you're going to self destruct, either by mishap or by way of a misguided
-      self-preservation instinct.
-    - 'When you''re reborn, come to me and I''ll explain more. '
+    - Hi.
 --- !u!135 &806235338
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8092,6 +8106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selfTag: 
+  selfName: 
   playerObject: {fileID: 0}
   radius: 8.75
   distanceToPlayer: 0
@@ -8216,10 +8231,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 762326044bbea084f8d5c04157c709b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueText: {fileID: 0}
-  iconText: {fileID: 0}
-  targetText: {fileID: 0}
-  inventoryText: {fileID: 0}
+  dialogueText: {fileID: 1804069077}
+  iconText: {fileID: 615320226}
+  targetText: {fileID: 765517511}
+  inventoryText: {fileID: 117405460}
   charText: {fileID: 0}
   infoBarText: {fileID: 607281850}
   dialogueContainer: {fileID: 1591672131}
@@ -29953,8 +29968,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 228728439}
     - target: {fileID: 1613431017052987141, guid: d17d1a3c90c72bd4e9d59d31881f5a99, type: 3}
+      propertyPath: radiusPosition
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613431017052987141, guid: d17d1a3c90c72bd4e9d59d31881f5a99, type: 3}
       propertyPath: scrollLerpState
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1613431017052987141, guid: d17d1a3c90c72bd4e9d59d31881f5a99, type: 3}
       propertyPath: transparentMaterial

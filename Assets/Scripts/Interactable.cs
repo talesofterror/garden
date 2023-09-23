@@ -8,6 +8,7 @@ public class Interactable : MonoBehaviour
 {
 
   public string selfTag;
+  public string selfName;
   public GameObject playerObject;
   public float radius = 2f;
   public float distanceToPlayer;
@@ -44,7 +45,7 @@ public class Interactable : MonoBehaviour
     }
     if (interactionState == InteractionState.notengaged)
     {
-      gameObject.GetComponent<DialogueTrigger>().EndDialogue();
+      // gameObject.GetComponent<DialogueTrigger>().EndDialogue();
       UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(false);
       UISingleton.uiSingleton.targetContainer.gameObject.SetActive(false);
       UISingleton.uiSingleton.iconContainer.gameObject.SetActive(false);
@@ -66,6 +67,7 @@ public class Interactable : MonoBehaviour
     {
       interactionState = InteractionState.hover;
       selfTag = gameObject.tag;
+      selfName = gameObject.GetComponent<DialogueTrigger>().dialogue.name;
       playerObject = other.gameObject;
     }
   }
@@ -82,11 +84,12 @@ public class Interactable : MonoBehaviour
 
     if (distanceToPlayer > radius)
     {
-      UISingleton.uiSingleton.infoBarText.text = "Want to speak to [target]? Get closer.";
+      UISingleton.uiSingleton.infoBarText.text = "Want to speak to " + selfName + "? Get closer.";
     }
+
     if (distanceToPlayer < radius)
     {
-      UISingleton.uiSingleton.infoBarText.text = "Click to speak to [target].";
+      UISingleton.uiSingleton.infoBarText.text = "Click to speak to " + selfName;
       if (Input.GetMouseButtonDown(0))
       {
         gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();

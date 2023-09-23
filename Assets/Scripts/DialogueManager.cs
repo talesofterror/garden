@@ -67,6 +67,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         Debug.Log("End of dialogue");
+        UISingleton.uiSingleton.dialogueContainer.gameObject.SetActive(false);
     }
 
 

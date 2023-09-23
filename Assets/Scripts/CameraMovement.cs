@@ -20,7 +20,7 @@ public class CameraMovement : MonoBehaviour
   float scrollLerpRadius;
   float scrollLerpHeight;
   float scrollLerpFOV;
-  public float scrollLerpState = 0;
+  public float scrollLerpState = 0.5f;
   public float scrollHeightOutValue = 7.37f;
   public float scrollHeightInValue = 5.1f;
   public float scrollRadiusOutValue = 2.94f;
