@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
   public float accelerationSpeed = 2f;
   float localX;
   float localZ;
+  public bool running;
 
   public Camera cam;
   Transform playerTransform;
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
   public enum PlayerState
   {
     hoverSelectableTalker,
+    teleporting,
     unengaged
   }
   public PlayerState playerState = new PlayerState();
@@ -37,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     layerMask = 1 << layerNumber;
 
-    Cursor.visible = true;
+    Cursor.visible = false;
     beaconGameObject = Instantiate(beaconGameObject, cursorYOffset, Quaternion.Euler(0, 0, 0));
     beaconGameObject.transform.parent = this.gameObject.transform;
     // beaconGameObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -70,7 +72,6 @@ public class PlayerMovement : MonoBehaviour
   void Update()
   {
 
-
     mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
 
     Ray ray = cam.ScreenPointToRay(mousePosition);
@@ -86,12 +87,11 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 beaconOffsetVector = new Vector3(0, 0 + cursorYOffset.y, 0);
     beaconGameObject.transform.position = targetGroundVector + beaconOffsetVector;
-    beaconGameObject.transform.LookAt(cam.transform.position);
-
-
+    // beaconGameObject.transform.LookAt(cam.transform.position);
 
     debug();
     PlayerRotation();
+    running = isRunning();
 
   }
 
@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
     directionalMovement(isRunning());
   }
 
-  private bool isRunning()
+  public bool isRunning()
   {
     if (Input.GetKey(KeyCode.LeftShift))
     {
@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
     else { return false; }
   }
 
-  private Vector3 directionalMovement(bool running)
+  public Vector3 directionalMovement(bool running)
   {
     localX = Input.GetAxis("Horizontal"); // get direction 'side to side' aka 'a' and 'd'
     localZ = Input.GetAxis("Vertical"); // get direction 'up and down' aka 'w' and 's'
@@ -135,8 +135,10 @@ public class PlayerMovement : MonoBehaviour
 
     // print("h = " + h + " | v = " + v);
 
-
-    Vector3 dVector = new Vector3(localX, 0, localZ); // assigns direction floats to  a new Vector value
+    // Disabled local right/left movement because allowing for 
+    // it felt confuding
+    // Vector3 dVector = new Vector3(localX, 0, localZ); // assigns direction floats to  a new Vector value
+    Vector3 dVector = new Vector3(0, 0, localZ); // assigns direction floats to  a new Vector value
 
     dVector = Quaternion.Euler(1, playerTransform.eulerAngles.y, 1) * dVector; // factors the object's current y rotation into dVector
     rB.AddForce(dVector * (_mSpeed * accelerate), ForceMode.Force);
