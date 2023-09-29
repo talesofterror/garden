@@ -30,7 +30,6 @@ public class DialogueManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
             {
                 DisplayNextSentence();
-                
             }
         }
     }

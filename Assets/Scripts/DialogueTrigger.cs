@@ -7,7 +7,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void TriggerDialogue ()
     {
-        UISingleton.uiSingleton.diaglogueManager.StartDialogue(dialogue);
+      UISingleton.uiSingleton.diaglogueManager.StartDialogue(dialogue);
     }
 
     public void EndDialogue () {
