@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
   public GameObject beaconGameObject;
   Renderer beaconRenderer;
   public GameObject playerGameObject;
+  public GameObject playerMeshGameObject;
   Rigidbody rB;
   Vector3 cursorYOffset = new Vector3(0, 2f, 0);
 
@@ -166,6 +167,7 @@ public class PlayerMovement : MonoBehaviour
   {
 
     playerTransform.LookAt(targetGroundVector);
+    // playerMeshGameObject.transform.LookAt(targetGroundVector);
 
   }
 
