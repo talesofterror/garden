@@ -10,7 +10,7 @@ public class Interactable : MonoBehaviour
 
   private string interactableTag;
   public string interactableName;
-  private GameObject playerObject;
+  private GameObject cursorTransform;
   private float radius = 8.75f;
   private float distanceToPlayer;
 
@@ -25,7 +25,7 @@ public class Interactable : MonoBehaviour
 
   void Start()
   {
-    playerObject = null;
+    cursorTransform = null;
     interactionState = InteractionState.notengaged;
   }
 
@@ -33,13 +33,15 @@ public class Interactable : MonoBehaviour
   {
     if (interactionState == InteractionState.hover)
     {
-      UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(true);
       if (interactableTag == "Talker")
       {
+        UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(true);
         TalkerBehavior();
       }
       if (interactableTag == "Enemy")
       {
+        UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(true);
+        UISingleton.uiSingleton.infoBarText.text = interactableName;
         return;
       }
     }
@@ -65,14 +67,14 @@ public class Interactable : MonoBehaviour
   }
 
   // Mouse Hover
-    void OnTriggerEnter(Collider other)
+  void OnTriggerEnter(Collider other)
   {
     if (other.gameObject.CompareTag("Cursor"))
     {
       interactionState = InteractionState.hover;
       interactableTag = gameObject.tag;
       PlayerSingleton.playerSingleton.interactionTarget = interactableName;
-      playerObject = other.gameObject;
+      cursorTransform = other.gameObject;
     }
   }
 
@@ -92,7 +94,7 @@ public class Interactable : MonoBehaviour
 
   void TalkerBehavior()
   {
-    distanceToPlayer = Vector3.Distance(playerObject.transform.parent.transform.position, transform.position);
+    distanceToPlayer = Vector3.Distance(cursorTransform.transform.parent.transform.position, transform.position);
 
     if (distanceToPlayer > radius)
     {

@@ -6,6 +6,10 @@ public class PlayerSingleton : MonoBehaviour
   public PlayerMovement playerMovement;
   public string interactionTarget;
 
+  void Start() {
+    // Physics.IgnoreLayerCollision(0,5);
+  }
+
   void Awake () {
       if (playerSingleton != null && playerSingleton != this) {
           Destroy(this);
