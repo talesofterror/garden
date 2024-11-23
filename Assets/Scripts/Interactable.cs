@@ -14,13 +14,6 @@ public class Interactable : MonoBehaviour
   private float radius = 8.75f;
   private float distanceToPlayer;
 
-  public enum InteractionState
-  {
-    hover,
-    engaged,
-    notengaged
-  }
-
   public InteractionState interactionState = new InteractionState();
 
   void Start()
@@ -33,28 +26,31 @@ public class Interactable : MonoBehaviour
   {
     if (interactionState == InteractionState.hover)
     {
+
+      UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(true);
+      UISingleton.uiSingleton.infoBarText.text = interactableName;
+
       if (interactableTag == "Talker")
       {
-        UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(true);
         TalkerBehavior();
       }
       if (interactableTag == "Enemy")
       {
-        UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(true);
-        UISingleton.uiSingleton.infoBarText.text = interactableName;
+        // UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(true);
+        // UISingleton.uiSingleton.infoBarText.text = interactableName;
         return;
       }
     }
 
     if (interactionState == InteractionState.notengaged)
     {
-      if (UISingleton.uiSingleton.dialogueContainer.gameObject.activeSelf) {
-        gameObject.GetComponent<DialogueTrigger>().EndDialogue();
-      }
-      UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(false);
-      UISingleton.uiSingleton.targetContainer.gameObject.SetActive(false);
-      UISingleton.uiSingleton.iconContainer.gameObject.SetActive(false);
-      UISingleton.uiSingleton.dialogueContainer.gameObject.SetActive(false);
+      // if (UISingleton.uiSingleton.dialogueContainer.gameObject.activeInHierarchy) {
+      //   gameObject.GetComponent<DialogueTrigger>().EndDialogue();
+      // }
+      // UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(false);
+      // UISingleton.uiSingleton.targetContainer.gameObject.SetActive(false);
+      // UISingleton.uiSingleton.iconContainer.gameObject.SetActive(false);
+      // UISingleton.uiSingleton.dialogueContainer.gameObject.SetActive(false);
     }
 
     if (interactionState == InteractionState.engaged)
@@ -69,11 +65,11 @@ public class Interactable : MonoBehaviour
   // Mouse Hover
   void OnTriggerEnter(Collider other)
   {
-    if (other.gameObject.CompareTag("Cursor"))
+    if (other.CompareTag("Cursor"))
     {
       interactionState = InteractionState.hover;
       interactableTag = gameObject.tag;
-      PlayerSingleton.playerSingleton.interactionTarget = interactableName;
+      // PlayerSingleton.playerSingleton.interactionTarget = interactableName;
       cursorTransform = other.gameObject;
     }
   }
@@ -82,6 +78,10 @@ public class Interactable : MonoBehaviour
   {
     interactionState = InteractionState.notengaged;
     interactableTag = "";
+    UISingleton.uiSingleton.infoBarContainer.gameObject.SetActive(false);
+    UISingleton.uiSingleton.targetContainer.gameObject.SetActive(false);
+    UISingleton.uiSingleton.iconContainer.gameObject.SetActive(false);
+    UISingleton.uiSingleton.dialogueContainer.gameObject.SetActive(false);
   }
 
   void OnDrawGizmosSelected()
@@ -111,4 +111,11 @@ public class Interactable : MonoBehaviour
       }
     }
   }
+}
+
+public enum InteractionState
+{
+  hover,
+  engaged,
+  notengaged
 }

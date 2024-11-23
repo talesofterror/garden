@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
     localX = Input.GetAxis("Horizontal"); // get direction 'side to side' aka 'a' and 'd'
     localZ = Input.GetAxis("Vertical"); // get direction 'up and down' aka 'w' and 's'
 
-    if (running == true)
+    if (running)
     {
       accelerate = accelerationSpeed;
     }
@@ -146,7 +146,8 @@ public class PlayerMovement : MonoBehaviour
 
     // print("Move target position = " + targetPosition + ".");
 
-    /*        if (playerTransform.position.y != yPlacement)
+    /*
+            if (playerTransform.position.y != yPlacement)
             {
                 playerTransform.position = new Vector3(playerTransform.position.x, yPlacement, playerTransform.position.z);
             }

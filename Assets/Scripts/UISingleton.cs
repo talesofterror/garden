@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class UISingleton : MonoBehaviour
 {
-    public static UISingleton uiSingleton { get; private set; }
-    // public static UISingleton uiSingleton;
+    private static UISingleton _uiSingleton;
+    public static UISingleton uiSingleton { get {return _uiSingleton;} }
 
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI iconText;
@@ -22,16 +22,18 @@ public class UISingleton : MonoBehaviour
     public DialogueManager diaglogueManager;
 
     void Awake () {
-        if (uiSingleton != null && uiSingleton != this) {
-            Destroy(this);
+        if (_uiSingleton != null && _uiSingleton != this) {
+            Destroy(this.gameObject);
         } else {
-            uiSingleton = this;
+            _uiSingleton = this;
+            DontDestroyOnLoad(this);
         }
     }
 
     void Start()
     {
       // infoBarContainer = GameObject.Find("InfoBar").GetComponent<Image>();
+      // uiSingleton = new UISingleton();
     }
 
     void Update()

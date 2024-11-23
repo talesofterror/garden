@@ -93,12 +93,12 @@ public class CameraMovement : MonoBehaviour
   private void orbitControl()
   {
 
-    if (Input.GetKey(KeyCode.A))
+    if (Input.GetKey(KeyCode.D))
     {
       orbitControlOffset += swingControlSpeed * Time.deltaTime;
 
     }
-    if (Input.GetKey(KeyCode.D))
+    if (Input.GetKey(KeyCode.A))
     {
       orbitControlOffset -= swingControlSpeed * Time.deltaTime;
     }
