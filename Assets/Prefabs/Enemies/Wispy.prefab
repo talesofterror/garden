@@ -353,9 +353,10 @@ GameObject:
   - component: {fileID: 936430985229309706}
   - component: {fileID: 5032094314355423179}
   - component: {fileID: 919132147706588048}
+  - component: {fileID: 919132147706588051}
   m_Layer: 0
-  m_Name: ghost
-  m_TagString: Untagged
+  m_Name: Wispy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -408,7 +409,7 @@ BoxCollider:
   m_GameObject: {fileID: 4913388090093847666}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.05, y: 4.77, z: 1.71}
   m_Center: {x: 0, y: 0, z: 0}
@@ -423,7 +424,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 26.8
+  m_Radius: 11.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &919132147706588048
 MonoBehaviour:
@@ -437,9 +438,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb61f6e1f9d9c564aa442bedd42388e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alertRadius: 26.8
-  amnesiaRadius: 28.16
+  alertRadius: 11.2
+  amnesiaRadius: 16.26
   speedMultiplier: 100
+--- !u!114 &919132147706588051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4913388090093847666}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d14e7b28ef1584396edfc6b8a7b104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableName: Ribbon Ghost
+  interactionState: 2
 --- !u!1 &6360217848227926914
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,6 +465,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5362002298887673727}
   - component: {fileID: 5826607593251584616}
+  - component: {fileID: 5628815949026025856}
+  - component: {fileID: 6308201132331246222}
   m_Layer: 0
   m_Name: ghost wavvy proto.001
   m_TagString: Untagged
@@ -530,6 +547,33 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.000103587285, y: -0.009786319, z: -0.0065112016}
     m_Extent: {x: 0.012953328, y: 0.026623815, z: 0.0155700985}
   m_DirtyAABB: 0
+--- !u!65 &5628815949026025856
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6360217848227926914}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5906656, y: 5.3247623, z: 3.1140192}
+  m_Center: {x: 0.0103587285, y: -0.2686317, z: -0.6811198}
+--- !u!114 &6308201132331246222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6360217848227926914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d14e7b28ef1584396edfc6b8a7b104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableName: Wispy
+  interactionState: 0
 --- !u!1 &7740327109776021967
 GameObject:
   m_ObjectHideFlags: 0

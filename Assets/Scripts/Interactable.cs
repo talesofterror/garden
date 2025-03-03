@@ -65,7 +65,7 @@ public class Interactable : MonoBehaviour
   // Mouse Hover
   void OnTriggerEnter(Collider other)
   {
-    if (other.CompareTag("Cursor"))
+  if (other.CompareTag("Cursor"))
     {
       interactionState = InteractionState.hover;
       interactableTag = gameObject.tag;
