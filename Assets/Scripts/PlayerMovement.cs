@@ -16,8 +16,6 @@ public class PlayerMovement : MonoBehaviour
   Vector3 mousePosition;
   public GameObject beaconGameObject;
   Renderer beaconRenderer;
-  public GameObject playerGameObject;
-  public GameObject playerMeshGameObject;
   Rigidbody rB;
   Vector3 cursorYOffset = new Vector3(0, 2f, 0);
 
@@ -36,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
   void Start()
   {
     playerState = PlayerState.unengaged;
-    playerTransform = playerGameObject.transform;
+    playerTransform = transform;
 
     layerMask = 1 << layerNumber;
 
@@ -188,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
     {
       if (Input.GetKey(KeyCode.R))
       {
-        transform.position = new Vector3(0, playerTransform.position.y, 0);
+        transform.position = new Vector3(0, 0, 0);
       }
     }
   }

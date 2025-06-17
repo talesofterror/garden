@@ -69,7 +69,7 @@ public class Interactable : MonoBehaviour
     {
       interactionState = InteractionState.hover;
       interactableTag = gameObject.tag;
-      // PlayerSingleton.playerSingleton.interactionTarget = interactableName;
+      PlayerSingleton.playerSingleton.interactionTarget = interactableName;
       cursorTransform = other.gameObject;
     }
   }

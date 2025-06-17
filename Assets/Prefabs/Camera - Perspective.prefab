@@ -61,8 +61,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 237.6
-  field of view: 67
+  far clip plane: 600
+  field of view: 18.38
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -142,17 +142,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 0}
   cameraAngle: 1.72
-  scrollLerpState: 1
+  scrollLerpState: 0.5
   scrollHeightOutValue: 77.2
   scrollHeightInValue: 7.8
   scrollRadiusOutValue: 148.6
   scrollRadiusInValue: 23
   scrollFOVOutValue: 18.38
   scrollFOVInValue: 33.8
-  radiusPosition: 0
+  radiusPosition: 2.4
   swingControlSpeed: 1.78
   radiusOffset: 1
-  transparentMaterial: {fileID: 0}
+  transparentMaterial: {fileID: 2100000, guid: 68e8c2395e921bd468ec9c5615d3c87e, type: 2}
 --- !u!114 &1613431017052987140
 MonoBehaviour:
   m_ObjectHideFlags: 0

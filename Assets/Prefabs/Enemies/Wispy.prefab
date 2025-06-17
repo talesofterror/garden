@@ -440,6 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alertRadius: 11.2
   amnesiaRadius: 16.26
+  stopDistance: 2
   speedMultiplier: 100
 --- !u!114 &919132147706588051
 MonoBehaviour:

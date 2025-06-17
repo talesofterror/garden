@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour
   {
     sentences = new Queue<string>();
   }
+  
   void Update()
   {
     if (dialogueState == DialogueState.Prompt)
@@ -30,6 +31,7 @@ public class DialogueManager : MonoBehaviour
     }
   }
 
+  string sentence;
   public void StartDialogue(Dialogue dialogue)
   {
     Debug.Log("Click to talk to " + dialogue.name);
@@ -43,20 +45,20 @@ public class DialogueManager : MonoBehaviour
     {
       sentences.Enqueue(sentence);
     }
-      DisplayNextSentence();
+    DisplayNextSentence();
   }
 
   public void DisplayNextSentence()
   {
+    dialogueText.text = sentence; 
+    sentence = sentences.Dequeue();
+    Debug.Log(sentence);
+
     if (sentences.Count == 0)
     {
       EndDialogue();
       return;
     }
-
-    string sentence = sentences.Dequeue();
-    dialogueText.text = sentence;
-    Debug.Log(sentence);
   }
 
   void EndDialogue()
